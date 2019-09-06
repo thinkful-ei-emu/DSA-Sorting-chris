@@ -70,7 +70,27 @@
 // Given a Linked List, sort the linked list using merge sort. You will need 
 // your linked list class from previous lesson to create the list and use all 
 // of its supplemental functions to solve this problem.
-
+function sortList(list){
+  let currNode = list.head;
+  let nextNode = currNode.next;
+  let swap = 0;
+  while(nextNode !== null){
+    if(currNode.value > nextNode.value){
+      list.insertLast(currNode.value);
+      list.remove(currNode.value);
+      currNode = nextNode;
+      nextNode = currNode.next;
+      swap++;
+    } else {
+      currNode = nextNode;
+      nextNode = currNode.next;
+    }
+  }
+  if(swap > 0){
+    return sortList(list);
+  }
+  return display(list);
+}
 
 
 // 6. Bucket sort
@@ -78,10 +98,13 @@
 // advance what the lowest and highest values are. You can't use arr.splice(), 
 // shift() or unshift() for this exercise.
 function buckSort(arr, high, low){
-    let res = []
-    
+  let res = [];
+  for(let i=0; i<arr.length; i++){
+    res[arr[i]] = arr[i];
+  }
+  return res.filter(num => num >= low );
 }
-console.log(ranSort([ 16, 19, 9, 14, 12, 10, 3, 17, 15, 13 ], 19, 3));
+// console.log(buckSort([ 16, 19, 9, 14, 12, 10, 3, 17, 15, 13 ], 19, 3));
 
 
 // 7. Sort in place
@@ -100,7 +123,7 @@ function swap(array, i, j) {
   array[j] = tmp;
   return array;
 }
-console.log(ranSort([ 3, 9, 10, 12, 13, 14, 15, 16, 17, 19 ]));
+// console.log(ranSort([ 3, 9, 10, 12, 13, 14, 15, 16, 17, 19 ]));
 
 // 8. Sorting books
 // Imagine that I gave you 20 books to sort in alphabetical order. 
